@@ -1,0 +1,837 @@
+﻿#,Project,Tracker,Parent task,Parent task subject,Status,Priority,Subject,Author,Assignee,Updated,Category,Target version,Start date,Due date,Estimated time,Total estimated time,Spent time,Total spent time,% Done,Created,Closed,Last updated by,Related issues,Files,Storie Points,Storie Description,Tester,Private,Description,Last notes
+1020,Baweei,study,"","",Aprovação,Média,[Infra] Consolidar comparativo e conduzir a decisão,Igor Kammer Grahl,Laila Marconatto,07 September 2026 22:12,"","",22 August 2026,05 September 2026,8.00,8.00,3.00,3.00,100,24 August 2026 08:53,"",Laila Marconatto,"","",,,,No,"h3. Objetivo
+
+Transformar os achados dos dois grupos em uma escolha, e preparar a
+apresentação para a turma.
+
+h3. Escopo
+
+h4. Primeira semana
+* Acompanhar os grupos A e B, garantir que estão medindo as mesmas coisas
+* Consolidar a matriz de decisão com os novos critérios de extensibilidade
+
+h4. Reunião de meio de sprint (fim da semana 1)
+* Fechar a escolha da ferramenta com o grupo
+* A partir daqui, ambos os grupos trabalham só na vencedora
+
+h4. Segunda semana
+* Montar a apresentação para a turma inteira
+* Registrar a justificativa escrita da decisão
+
+h3. Matriz atualizada
+
+|_. Critério |_. Peso |_. Taiga |_. Plane |
+| Facilidade de onboarding | 3 | | |
+| Suporte a Scrum e sprints | 3 | | |
+| Qualidade da API e webhooks | 3 | | |
+| Viabilidade da camada de XP | 3 | | |
+| Peso operacional na VM | 2 | | |
+| Integrações prontas (Slack, Git) | 2 | | |
+| Suporte a agentes de IA / MCP | 2 | | |
+| Interface e apelo visual | 2 | | |
+| Recursos presos em edição paga | 2 | | |
+| Interface em português | 1 | | |
+
+Notas de 1 a 5. Multiplicar pelo peso e somar.
+
+h3. Entregável
+
+Documento de decisão assinado pelo grupo + slides da apresentação.
+
+h3. Definição de pronto
+
+A escolha está fechada e escrita. A Sprint 2 não abre com ""ainda estamos
+decidindo"".","Na reunião do dia 04/09 foi definido que será usado o Taiga para gerenciamento de projetos daqui para frente. Vamos passar os projetos ativos do Redmine para o Taiga, mas mantendo o conteúdo antigo no Redmine para consulta quando necessário. 
+
+Mais alguma necessidade para essa tarefa?
+
+"
+1019,Baweei,infra,"","",Aprovação,Média,[Infra] Provisionar VM e subir as duas ferramentas em rede,Igor Kammer Grahl,Victor Hugo Reinicke,02 September 2026 09:18,"","",22 August 2026,05 September 2026,8.00,8.00,2.00,2.00,90,24 August 2026 08:52,"",Victor Hugo Reinicke,"","",,,,No,"h3. Objetivo
+
+Tirar as ferramentas da máquina local e colocá-las acessíveis pela rede,
+para que a turma consiga usar na apresentação.
+
+h3. Escopo
+
+* Provisionar a VM conforme o que a TI liberou
+* Subir Taiga e Plane na mesma VM, em portas distintas
+* Confirmar acesso a partir de outra máquina da rede do campus
+* Definir e testar backup do banco das duas instâncias
+* Restaurar o backup ao menos uma vez, em teste
+* Documentar: IPs, portas, credenciais de admin (em local seguro, não no
+  wiki público), como derrubar e subir
+
+h3. Riscos a verificar
+
+* Recursos da VM comportam as duas stacks simultaneamente? O Plane sobe
+  vários serviços com estado.
+* Se não couber, subir uma de cada vez e registrar isso como ponto negativo
+  do Plane na avaliação.
+
+h3. Entregável
+
+Runbook no wiki + as duas URLs funcionando na rede.
+
+h3. Definição de pronto
+
+Um integrante consegue acessar as duas ferramentas do próprio notebook,
+sem ajuda.","Foi feita a subida de um container no Proxmox novo da Fabtec, criado pelo ip 200.135.58.66, onde é o ip padrão para nossas duas aplicações.
+
+A instalação, tanto do plane(que tem um setup.sh) quanto do Taiga(puxando de um github) foi bem simples e fácil de seguir.
+
+As configurações de cada um dos containers separados(um para o Taiga outro para o plane), se baseiam no ip de acesso(200.135.58.66) e suas respectivas portas: 9000(Taiga) e 8000(Plane).
+
+Foi gerada senhas(secret_keys) utilizando o openssl para ser mais seguro(sugestão dos próprios projetos).
+E por fim, configurei o SMTP de cada um dos containers com a conta eds.riodosul@ifc.edu.br.
+
+A configuração do Plane é bem mais robusta e descritiva de configurar(já que tem um setup.sh, e um plane.env), enquanto o Taiga tem uma configuração mais simples, que fica até estranho de configurar no início.
+
+Acessar o Plane:
+http://200.135.58.66:8000
+Acessar o Taiga:
+http://200.135.58.66:9000
+
+
+O taiga pede para criarmos um usuário já para acessar, eu criei seguindo o próprio exemplo do taiga, e agora temos o usuário para acessar o login sendo:
+fabtec
+senha: 12345678
+"
+1018,Baweei,infra,"","",Aberta,Alta,[Infra] Provisionar VM e subir as duas ferramentas em rede,Igor Kammer Grahl,Igor Kammer Grahl,24 August 2026 08:51,"","",22 August 2026,05 September 2026,8.00,8.00,0.00,0.00,0,24 August 2026 08:51,"","","","",,,,No,"h3. Objetivo
+
+Tirar as ferramentas da máquina local e colocá-las acessíveis pela rede,
+para que a turma consiga usar na apresentação.
+
+h3. Escopo
+
+* Provisionar a VM conforme o que a TI liberou
+* Subir Taiga e Plane na mesma VM, em portas distintas
+* Confirmar acesso a partir de outra máquina da rede do campus
+* Definir e testar backup do banco das duas instâncias
+* Restaurar o backup ao menos uma vez, em teste
+* Documentar: IPs, portas, credenciais de admin (em local seguro, não no
+  wiki público), como derrubar e subir
+
+h3. Riscos a verificar
+
+* Recursos da VM comportam as duas stacks simultaneamente? O Plane sobe
+  vários serviços com estado.
+* Se não couber, subir uma de cada vez e registrar isso como ponto negativo
+  do Plane na avaliação.
+
+h3. Entregável
+
+Runbook no wiki + as duas URLs funcionando na rede.
+
+h3. Definição de pronto
+
+Um integrante consegue acessar as duas ferramentas do próprio notebook,
+sem ajuda.",""
+1017,Baweei,study,"","",Aprovação,Média,[Plane] Prova de conceito: webhook de conclusão para XP,Igor Kammer Grahl,Miguel Teles,04 September 2026 06:59,"","",22 August 2026,05 September 2026,2.00,2.00,2.00,2.00,100,24 August 2026 08:50,"",Miguel Teles,"","payload.png
+código.png",,,,No,"h3. Objetivo
+
+Mesmo experimento do Taiga, no Plane, para comparar esforço de integração.
+
+h3. Escopo
+
+* Receptor de webhook mínimo
+* Concluir um work item real e capturar o disparo
+* Extrair: quem concluiu, qual item, qual estimate
+* Somar por usuário
+* Documentar o que falta no payload
+
+h3. Escopo NÃO incluído
+
+Sem interface, sem banco definitivo, sem autenticação. Descartável.
+
+h3. Entregável
+
+Script no repositório + doc de 1 página.
+
+h3. Comparação
+
+Ao final, os dois grupos devem responder a mesma pergunta:
+quantas horas levou do zero até o número subir?
+
+h3. Definição de pronto
+
+Concluir um work item no Plane faz um número subir em algum lugar.","*Introdução*
+
+Foi desenvolvido um receptor de webhook utilizando Python + Flask, executado em um container Docker. O receptor possui um endpoint POST /webhook, responsável por receber as requisições enviadas pelo Plane.
+
+Exemplo do código utilizado:
+
+!código.png!
+
+Para permitir o acesso do Plane ao receptor durante o teste, foi utilizado um Cloudflare Quick Tunnel, disponibilizando temporariamente o endpoint através de uma URL pública. Como o objetivo era apenas realizar o experimento, não foram implementados interface, banco de dados definitivo ou autenticação.
+
+*Teste realizado*
+
+Para validar a integração, foi utilizado o projeto Biometria e criado o Work Item ""Teste integração webhook"", com estimativa de 3 pontos. O Work Item foi alterado para o estado Done, fazendo com que o Plane disparasse o webhook para o receptor Flask.O receptor recebeu a requisição corretamente e respondeu com HTTP 200. O payload permitiu identificar o evento como issue, a ação como updated, o Work Item que foi alterado, o usuário responsável pela alteração, o novo estado Done, a data de conclusão e o projeto ao qual o Work Item pertence.
+
+Payload recebido pelo Flask após a conclusão do Work Item:
+
+!payload.png!
+
+*Soma por usuário*
+
+Durante o teste, foi verificado que o payload possui o campo estimate_point, porém esse campo retorna somente um identificador (UUID), e não o valor numérico da estimativa. No caso testado, o Plane enviou o identificador d4c80b37-8a6b-4957-a41f-570480516d08, enquanto o valor real da estimativa do Work Item era 3 pontos. Dessa forma, não foi possível realizar a soma das estimativas por usuário utilizando somente os dados recebidos pelo webhook."
+1016,Baweei,study,"","",Aprovação,Média,"[Plane] Mapear extensibilidade: API, webhooks e integrações",Igor Kammer Grahl,Miguel Teles,04 September 2026 07:01,"","",22 August 2026,05 September 2026,8.00,8.00,4.50,4.50,100,24 August 2026 08:49,"",Miguel Teles,"","postman.png
+integrações.png
+clientemcp.png",,,,No,"h3. Objetivo
+
+Mesmo levantamento do card do Taiga, para permitir comparação direta.
+Sigam a MESMA estrutura de seções, na mesma ordem.
+
+h3. Escopo
+
+h4. API REST
+* Autenticação: como obtém e renova token
+* Endpoints para: projetos, cycles, modules, work items, membros, estimates
+* Confirmar que a API está completa na Community Edition e não é
+  feature da Commercial
+* Testar escrita: criar work item via API
+* Rate limit e qualidade da documentação
+
+h4. Webhooks
+* Quais eventos disparam
+* Capturar o payload REAL de conclusão de work item e anexar
+* Confirmar se webhooks funcionam na Community Edition
+* Tem secret de validação?
+
+h4. Integrações prontas
+* Slack: nativa? o que envia?
+* GitHub/GitLab: vinculação de commit e PR a work item
+* Verificar quais integrações são exclusivas da edição Commercial. Este
+  ponto é crítico: se as integrações boas forem pagas, muda a avaliação.
+
+h4. Agentes de IA / MCP
+* O Plane divulga recursos de IA. Descobrir exatamente o que está na
+  Community Edition e o que exige licença paga.
+* Existe servidor MCP oficial?
+* Se houver: testar conectando ao Claude Code ou outro cliente MCP
+
+h3. Entregável
+
+Documento no wiki, mesma estrutura do card do Taiga, com payloads anexados.
+
+h3. Atenção especial
+
+Para cada recurso encontrado, marcar explicitamente: disponível na
+Community Edition, ou requer Commercial? Esta coluna é a mais importante
+do documento.
+
+h3. Definição de pronto
+
+Todo ""sim"" tem evidência prática, e todo recurso tem a marcação de edição.","*API REST*
+
+A API REST do Plane permite acessar e gerenciar os principais recursos da plataforma, como Projects, Cycles, Modules, Work Items, Members e Estimates. Para utilizar a API, é possível gerar uma API Key** em Profile Settings → Personal Access Tokens, que deve ser enviada nas requisições através do header X-API-Key. Também existe suporte a autenticação por OAuth.
+
+Através da API é possível realizar operações como criar, consultar, atualizar e excluir os recursos, além de ações específicas, como arquivar projetos, adicionar Work Items em Cycles e Modules e gerenciar membros e estimates.
+
+A API REST está disponível na Community Edition, não sendo um recurso exclusivo da Commercial. Porém, durante o levantamento, foi percebido que a documentação não deixa muito clara a diferença entre as duas edições em todos os endpoints. 
+
+A API possui um limite de 60 requisições por minuto por API Key. Quando esse limite é atingido, novas requisições podem retornar o código 429. O limite é reiniciado a cada minuto, e os headers X-RateLimit-Remaining e X-RateLimit-Reset permitem acompanhar, respectivamente, quantas requisições ainda estão disponíveis e quando o limite será liberado novamente.
+
+Para validar a escrita pela API, foi utilizado o Postman para criar um Work Item através do endpoint de criação. Foi enviado o nome ""Teste criado pela API"" com prioridade medium, e a API retornou corretamente os dados do item criado, confirmando que a operação funciona na Community Edition.
+
+Evidência do teste realizado no Postman:
+
+!postman.png!
+
+De forma geral, a documentação da API é organizada e apresenta os endpoints, métodos, autenticação e exemplos de uso necessários para realizar os testes. O principal ponto de atenção encontrado foi a falta de uma separação mais clara entre os recursos disponíveis na Community Edition e na Commercial Edition.
+
+*Webhooks*
+
+Eventos que disparam:
+
+O Plane possui suporte à criação de Webhooks, permitindo que uma URL externa receba notificações quando determinadas ações são realizadas no sistema.
+
+Durante o teste na Community Edition, foram identificados os seguintes grupos de eventos disponíveis para configuração:
+
+* Projects: projeto criado, atualizado ou excluído;
+* Cycles: cycle criado, atualizado ou excluído;
+* Work Items: Work Item criado, atualizado, excluído ou adicionado a um Cycle ou Module;
+* Modules: módulo criado, atualizado ou excluído;
+* Work Item Comments: eventos relacionados aos comentários dos Work Items.
+
+Para realizar o teste, foi configurado um Webhook utilizando o evento de Work Items.
+
+Para validar o funcionamento do Webhook, foi utilizado o Work Item ""Publicar projeto"", que inicialmente estava no estado Backlog.
+
+Após alterar seu estado para Done, o Plane enviou uma requisição HTTP para a URL configurada no Webhook. A requisição foi capturada utilizando o Webhook.site.
+
+O payload recebido foi:
+
+{
+  ""event"": ""issue"",
+  ""action"": ""updated"",
+  ""webhook_id"": ""45d5a39a-2ca0-4891-8614-3e7890770a00"",
+  ""workspace_id"": ""8aa5633c-3077-480c-a7aa-ddb4a1becc03"",
+  ""workspace_slug"": ""fabtec"",
+  ""data"": {
+    ""id"": ""9b4dd1b6-f59e-402a-a3a2-aeeed394eef6"",
+    ""labels"": [],
+    ""assignees"": [
+      {
+        ""id"": ""409fe188-cccd-46f1-86e3-653a6dd5a6b2"",
+        ""first_name"": ""TesteZeroTres"",
+        ""last_name"": """",
+        ""email"": ""teste03@gmail.com"",
+        ""avatar"": """",
+        ""avatar_url"": null,
+        ""display_name"": ""teste03""
+      }
+    ],
+    ""state"": {
+      ""id"": ""74c328df-33b0-4b6e-8da0-5ab6bb067fd4"",
+      ""name"": ""Done"",
+      ""color"": ""#46A758"",
+      ""group"": ""completed""
+    },
+    ""description"": {},
+    ""created_at"": ""2026-08-20T05:50:09.686359Z"",
+    ""updated_at"": ""2026-09-01T16:43:58.140808Z"",
+    ""deleted_at"": null,
+    ""point"": null,
+    ""name"": ""Publicar projeto"",
+    ""description_json"": {},
+    ""description_html"": ""<p></p>"",
+    ""description_stripped"": """",
+    ""description_binary"": null,
+    ""priority"": ""urgent"",
+    ""start_date"": null,
+    ""target_date"": null,
+    ""sequence_id"": 26,
+    ""sort_order"": 255535,
+    ""completed_at"": ""2026-09-01T16:43:58.051543Z"",
+    ""archived_at"": null,
+    ""is_draft"": false,
+    ""external_source"": null,
+    ""external_id"": null,
+    ""created_by"": ""5fd4a770-049f-4c73-be6b-16c0370cc8c1"",
+    ""updated_by"": ""5fd4a770-049f-4c73-be6b-16c0370cc8c1"",
+    ""project"": ""d02f2f90-a064-48cf-9564-22518282617c"",
+    ""workspace"": ""8aa5633c-3077-480c-a7aa-ddb4a1becc03"",
+    ""parent"": null,
+    ""estimate_point"": ""a55e710c-8ac0-44fb-9252-9b0012afed87"",
+    ""type"": null
+  },
+  ""activity"": {
+    ""field"": ""state_id"",
+    ""new_value"": ""74c328df-33b0-4b6e-8da0-5ab6bb067fd4"",
+    ""old_value"": ""f69bae4e-2f97-420d-b8e4-fad82e761e4f"",
+    ""actor"": {
+      ""id"": ""5fd4a770-049f-4c73-be6b-16c0370cc8c1"",
+      ""first_name"": ""Miguel"",
+      ""last_name"": ""Teles"",
+      ""email"": ""miguel.epteles@gmail.com"",
+      ""avatar"": """",
+      ""avatar_url"": null,
+      ""display_name"": ""miguel.epteles""
+    },
+    ""old_identifier"": null,
+    ""new_identifier"": null
+  }
+}
+
+O payload confirma que o Work Item foi atualizado para o estado Done. O campo state.group possui o valor completed e o campo completed_at registra o horário da conclusão.
+
+O objeto activity também registra a alteração realizada, indicando state_id como o campo modificado e apresentando os identificadores do estado anterior e do novo estado.
+
+Funcionamento na Community Edition
+
+O recurso de Webhooks foi testado diretamente na instalação do Plane Community Edition utilizada durante a avaliação.
+
+Foi possível criar um Webhook, selecionar os eventos, configurar uma Payload URL e receber a requisição externamente após a alteração de um Work Item.
+
+Com o teste realizado, foi confirmado o funcionamento do recurso de Webhooks na Community Edition utilizada.
+
+Secret de validação
+
+Ao criar o Webhook, o Plane gerou o arquivo webhook-secret-key, utilizado como chave secreta para o Webhook. Nas requisições recebidas, também foi identificado o header x-plane-signature, indicando a existência de um mecanismo de validação das requisições.
+
+*Integrações prontas*
+
+O Plane possui integrações nativas com ferramentas como Slack, GitHub e GitLab, porém esses recursos são exclusivos da Commercial Edition e não estão disponíveis na Community Edition.
+
+!integrações.png!
+
+*Agentes de IA / MCP*
+
+O Plane possui recursos de Inteligência Artificial, porém o Plane AI é um recurso exclusivo da Commercial Edition, não estando disponível na Community Edition.
+
+Além disso, o Plane disponibiliza um MCP Server oficial, que permite conectar ferramentas de IA ao sistema. Para testar esse recurso na Community Edition, foi utilizada a conexão local por stdio, utilizando um Personal Access Token.
+
+Para realizar o teste, foi utilizado o VS Code junto com o GitHub Copilot como cliente MCP. O servidor foi configurado utilizando o plane-mcp-server, o workspace fabtec e a URL da instância local do Plane.
+
+Após a configuração, o Copilot conseguiu se comunicar com o Plane através do MCP e executar a ferramenta de consulta de projetos. Como resultado, foi encontrado o projeto Biometria dentro do workspace fabtec, confirmando que a integração entre VS Code + GitHub Copilot + Plane MCP Server + Plane Community Edition funcionou corretamente.
+
+!clientemcp.png!
+
+
+"
+1015,Baweei,study,"","",Aprovação,Média,[Taiga] Prova de conceito: webhook de conclusão para XP,Igor Kammer Grahl,John Nicolas,02 September 2026 20:03,"","",22 August 2026,05 September 2026,2.00,2.00,2.00,2.00,100,24 August 2026 08:48,"",John Nicolas,"",documentacao_webhook_gamificacao_taiga.docx,,,,No,"h3. Objetivo
+
+Provar na prática que a camada de gamificação é construível em cima do Taiga.
+
+h3. Escopo
+
+* Escrever um receptor de webhook mínimo (qualquer linguagem, pode ser um
+  script simples)
+* Concluir uma tarefa real no Taiga e capturar o disparo
+* Extrair do payload: quem concluiu, qual tarefa, quantos pontos
+* Gravar num arquivo ou tabela simples e somar por usuário
+* Documentar o que FALTA no payload e se é preciso chamar a API para
+  complementar
+
+h3. Escopo NÃO incluído
+
+Sem interface, sem banco definitivo, sem autenticação. É prova de conceito.
+Vai para o lixo depois. Não caprichem.
+
+h3. Entregável
+
+Script no repositório + doc de 1 página com o fluxo que funcionou e as
+limitações encontradas.
+
+h3. Definição de pronto
+
+Concluir uma tarefa no Taiga faz um número subir em algum lugar.","Igor Kammer Grahl escreveu:
+> h3. Objetivo
+> 
+> Provar na prática que a camada de gamificação é construível em cima do Taiga.
+> 
+> h3. Escopo
+> 
+> * Escrever um receptor de webhook mínimo (qualquer linguagem, pode ser um
+>   script simples)
+> * Concluir uma tarefa real no Taiga e capturar o disparo
+> * Extrair do payload: quem concluiu, qual tarefa, quantos pontos
+> * Gravar num arquivo ou tabela simples e somar por usuário
+> * Documentar o que FALTA no payload e se é preciso chamar a API para
+>   complementar
+> 
+> h3. Escopo NÃO incluído
+> 
+> Sem interface, sem banco definitivo, sem autenticação. É prova de conceito.
+> Vai para o lixo depois. Não caprichem.
+> 
+> h3. Entregável
+> 
+> Script no repositório + doc de 1 página com o fluxo que funcionou e as
+> limitações encontradas.
+> 
+> h3. Definição de pronto
+> 
+> Concluir uma tarefa no Taiga faz um número subir em algum lugar.
+
+"
+1014,Baweei,study,"","",Aprovação,Média,"[Taiga] Mapear extensibilidade: API, webhooks e integrações",Igor Kammer Grahl,John Nicolas,04 September 2026 09:38,"","",22 August 2026,05 September 2026,8.00,8.00,8.00,8.00,100,24 August 2026 08:48,"",John Nicolas,"","payload.json
+ranking.json
+Extensibilidade e Integrações do Taiga.docx
+Screenshot from 2026-09-04 09-28-09.png
+Screenshot from 2026-09-04 09-30-32.png
+Screenshot from 2026-09-04 09-31-27.png
+webhook.py",,,,No,"h3. Objetivo
+
+Levantar até onde o Taiga pode ser estendido e integrado, com evidência
+prática, não só leitura de documentação.
+
+h3. Escopo
+
+h4. API REST
+* Autenticação: como obtém e renova token
+* Endpoints disponíveis para: projetos, sprints, user stories, tarefas,
+  usuários, story points
+* A API permite ESCRITA, ou é só leitura? Testar criando uma tarefa via API.
+* Existe rate limit?
+* Qualidade da documentação: tem Swagger? Está atualizada?
+
+h4. Webhooks
+* Quais eventos disparam webhook
+* Capturar o payload REAL de ""tarefa concluída"" e anexar ao documento
+  (use webhook.site ou um endpoint local)
+* O payload traz ID do usuário, story points e o projeto?
+* Tem assinatura/secret para validar origem?
+
+h4. Integrações prontas
+* Slack: existe integração nativa? O que ela envia?
+* GitHub/GitLab: dá para vincular commit a tarefa?
+* Existe marketplace ou catálogo de plugins?
+
+h4. Agentes de IA / MCP
+* Existe servidor MCP oficial ou comunitário para o Taiga?
+* Se não existir: a API é boa o suficiente para escrevermos um?
+* Buscar em: repositório oficial, GitHub, registros de MCP
+
+h3. Entregável
+
+Documento no wiki com payloads reais anexados e um veredito por seção:
+existe / não existe / dá para construir.
+
+h3. Definição de pronto
+
+Todo ""sim"" do documento tem uma evidência prática anexada. Nada de
+""a documentação diz que suporta"".","Igor Kammer Grahl escreveu:
+> h3. Objetivo
+> 
+> Levantar até onde o Taiga pode ser estendido e integrado, com evidência
+> prática, não só leitura de documentação.
+> 
+> h3. Escopo
+> 
+> h4. API REST
+> * Autenticação: como obtém e renova token
+> * Endpoints disponíveis para: projetos, sprints, user stories, tarefas,
+>   usuários, story points
+> * A API permite ESCRITA, ou é só leitura? Testar criando uma tarefa via API.
+> * Existe rate limit?
+> * Qualidade da documentação: tem Swagger? Está atualizada?
+> 
+> h4. Webhooks
+> * Quais eventos disparam webhook
+> * Capturar o payload REAL de ""tarefa concluída"" e anexar ao documento
+>   (use webhook.site ou um endpoint local)
+> * O payload traz ID do usuário, story points e o projeto?
+> * Tem assinatura/secret para validar origem?
+> 
+> h4. Integrações prontas
+> * Slack: existe integração nativa? O que ela envia?
+> * GitHub/GitLab: dá para vincular commit a tarefa?
+> * Existe marketplace ou catálogo de plugins?
+> 
+> h4. Agentes de IA / MCP
+> * Existe servidor MCP oficial ou comunitário para o Taiga?
+> * Se não existir: a API é boa o suficiente para escrevermos um?
+> * Buscar em: repositório oficial, GitHub, registros de MCP
+> 
+> h3. Entregável
+> 
+> Documento no wiki com payloads reais anexados e um veredito por seção:
+> existe / não existe / dá para construir.
+> 
+> h3. Definição de pronto
+> 
+> Todo ""sim"" do documento tem uma evidência prática anexada. Nada de
+> ""a documentação diz que suporta"".
+
+"
+1006,Baweei,study,"","",Fechada,Média,"[Pesquisa] Avaliar alternativas: Vikunja, Leantime e OpenProject",Igor Kammer Grahl,Laila Marconatto,24 August 2026 08:39,"","",07 August 2026,21 August 2026,8.00,8.00,0.00,0.00,100,13 August 2026 14:16,24 August 2026 08:39,Igor Kammer Grahl,"","",,,,No,"h3. Objetivo
+
+Garantir que não estamos escolhendo entre duas opções por falta de ter
+olhado o resto. Avaliação em papel, sem instalar tudo.
+
+h3. Escopo
+
+Para cada uma das três, responder:
+
+* Licença exata e se existe qualquer limite de usuários no self-hosted
+* Stack e peso operacional (quantos serviços sobem junto)
+* Tem sprint/Scrum de verdade, ou só kanban?
+* Tem API REST e webhooks? Documentação disponível?
+* Data do último commit e do último release
+* Tem interface em português?
+
+h4. Observações a considerar
+
+* Vikunja: binário Go único, muito leve, mas não tem Scrum. Verificar
+  se labels e filtros salvos dão conta de sprint.
+* Leantime: é PHP/MySQL, ou seja, a única candidata cuja stack o grupo já
+  domina. Verificar quais features são plugin pago.
+* OpenProject: verificar se não é mais pesado que o próprio Redmine, que é
+  justamente o que queremos abandonar.
+
+Se alguma se mostrar claramente superior, subir instância local para confirmar.
+
+h3. Entregável
+
+Tabela comparativa no wiki com as seis perguntas respondidas para cada uma,
+mais recomendação: descartar ou levar para avaliação prática.
+
+h3. Definição de pronto
+
+Cada descarte tem um motivo escrito. ""Não gostei"" não é motivo.",""
+1005,Baweei,infra,"","",Fechada,Média,[Infra] Preparar servidor e definir plano de operação,Igor Kammer Grahl,Victor Hugo Reinicke,24 August 2026 08:39,"","",07 August 2026,21 August 2026,8.00,8.00,0.00,0.00,100,13 August 2026 14:15,24 August 2026 08:39,Igor Kammer Grahl,"","",,,,No,"h3. Objetivo
+
+Deixar o servidor pronto para receber a ferramenta escolhida, e definir quem
+cuida do quê depois que ela estiver no ar.
+
+h3. Escopo
+
+* Preparar o ambiente conforme o resultado do card de levantamento
+* Definir e testar rotina de backup do banco de dados
+* Testar a RESTAURAÇÃO do backup. Backup não testado não é backup.
+* Definir plano de atualização: com que frequência, quem executa
+* Definir plano de recesso: quem tem acesso e quem é acionado se cair
+* Documentar o procedimento de recuperação em caso de perda total
+
+h3. Entregável
+
+Runbook operacional no wiki: como subir, como atualizar, como restaurar,
+quem chamar.
+
+h3. Observação
+
+Se o levantamento com a TI ainda não tiver retornado, esta tarefa fica
+bloqueada. Não comece pelos scripts antes de saber o que é permitido.
+
+h3. Definição de pronto
+
+O backup foi restaurado com sucesso ao menos uma vez, em teste.",""
+1004,Baweei,infra,"","",Fechada,Média,[Infra] Levantamento de requisitos com a TI do IFC,Igor Kammer Grahl,Igor Kammer Grahl,24 August 2026 08:39,"","",07 August 2026,21 August 2026,8.00,8.00,0.00,0.00,100,13 August 2026 14:14,24 August 2026 08:39,Igor Kammer Grahl,"","",,,,No,"h3. Objetivo
+
+Descobrir as restrições reais do servidor do IFC antes de escolher a
+ferramenta. Restrição de infra desclassifica candidata, então isso vem antes
+da decisão técnica.
+
+h3. Perguntas a responder
+
+* Docker/Podman é permitido na máquina, ou apenas pacotes da distro?
+* Qual a especificação disponível: CPU, RAM, disco?
+* Quem tem acesso root? Quem aplica atualização de segurança?
+* Existe rotina de backup automático, ou é responsabilidade do grupo?
+* Teremos DNS interno e certificado HTTPS, ou acesso por IP e porta?
+* O serviço fica acessível fora da rede do campus? Via VPN?
+* Existe política de retenção ou de dados institucional que se aplique?
+* O que acontece com o serviço no recesso, quando ninguém do grupo está
+  no campus? Quem responde se cair?
+
+h3. Entregável
+
+Documento no wiki com as respostas e o nome/contato de quem respondeu.
+Marcar explicitamente os itens que ficaram sem resposta.
+
+h3. Definição de pronto
+
+Sabemos exatamente o que podemos e o que não podemos rodar no servidor.",""
+1003,Baweei,infra,"","",Fechada,Média,"[Plane] Rodar sprint simulada, avaliar usabilidade e confirmar limite de usuários",Igor Kammer Grahl,Miguel Teles,24 August 2026 08:40,"","",07 August 2026,21 August 2026,8.00,8.00,4.00,4.00,80,13 August 2026 14:13,24 August 2026 08:40,Igor Kammer Grahl,"","usuários.png
+billing.png
+work.png
+cycle.png
+module.png
+list.png
+board.png
+calendar.png
+table.png
+timeline.png",,,,No,"h3. Objetivo
+
+Usar o Plane de verdade e resolver empiricamente a dúvida sobre limite de
+assentos na Community Edition.
+
+h3. Escopo
+
+h4. Teste de limite (prioridade máxima)
+
+* Criar 15 contas de usuário no mesmo workspace
+* Documentar o comportamento exato: bloqueou? avisou? passou sem reclamar?
+* Print da tela de billing/settings, se existir na Community Edition
+* Conferir se em algum momento é pedida chave de licença
+
+h4. Avaliação de uso
+
+* Criar projeto com ao menos 20 work items
+* Rodar um cycle completo (equivalente a sprint): planejamento, execução,
+  encerramento
+* Testar: modules, estimates, dashboards, os cinco layouts de visualização
+* Cronometrar as mesmas tarefas do card do Taiga, para comparação direta:
+  ** Tempo para criar uma tarefa nova
+  ** Tempo para mover card entre colunas
+  ** Cliques até ""o que eu preciso fazer hoje""
+* Simular onboarding com alguém de fora do grupo
+
+h3. Entregável
+
+Documento com o resultado do teste de limite (com prints como evidência),
+tempos cronometrados e resultado do onboarding.
+
+h3. Definição de pronto
+
+A questão do limite de 12 usuários está respondida com evidência, não com
+citação de documentação.","*Documentação do Processo de Teste do Plane Community Edition*
+
+*Introdução*
+
+Durante os testes do Plane, realizei algumas atividades para entender como a plataforma funciona na prática. Meu principal objetivo foi verificar se realmente existia um limite de 12 usuários e testar os principais recursos de gerenciamento de projetos.
+
+*1. Teste do limite de usuários*
+
+Primeiramente, criei usuários de teste dentro do mesmo workspace. Fui adicionando os usuários até chegar a 15 membros, observando se o Plane apresentaria algum bloqueio ou solicitação de licença. Durante o meu teste, o Plane permitiu ultrapassar o limite de 12 usuários sem apresentar nenhum tipo de bloqueio.
+
+!usuários.png!
+
+*2. Verificação de Billing e licença*
+
+Também verifiquei as áreas de Settings/Billing para procurar informações sobre planos, limites de usuários ou alguma solicitação de licença. Durante essa verificação, não foi solicitada nenhuma chave de licença nem apareceu qualquer bloqueio relacionado ao número de usuários.
+
+!Billing.png!
+
+*3. Criação dos Work Items*
+
+Depois, criei o projeto Biometria e adicionei 20 Work Items para testar a plataforma com uma quantidade maior de tarefas. Também utilizei informações como responsáveis, prioridades, datas e módulos para organizar as atividades.
+
+!work.png!
+
+*4. Teste de Cycles*
+
+Também utilizei o recurso Cycles para simular uma sprint. Organizei algumas tarefas, acompanhei seu andamento e realizei o encerramento do Cycle.
+
+!cycle.png!
+
+*5. Teste de Modules*
+
+Utilizei o recurso Modules para organizar as tarefas. Um dos módulos criados foi o Front-end, onde associei algumas atividades.
+
+!module.png!
+
+*6. Teste dos layouts*
+
+Durante a criação das Views, encontrei cinco formas diferentes de visualizar as tarefas: List, Board, Calendar, Table e Timeline.Testei cada uma delas para observar como os Work Items eram apresentados e como as tarefas poderiam ser visualizadas em cada formato.
+
+*Layout List*
+!list.png!
+
+*Layout Board*
+!board.png!
+
+*Layout Calendar*
+!calendar.png!
+
+*Layout Table*
+!table.png!
+
+*Layout Timeline*
+!timeline.png!
+
+*7. Resultado até o momento*
+
+Com os testes que realizei, consegui confirmar que o Plane permitiu utilizar 15 usuários no mesmo workspace. Também consegui criar 20 Work Items e utilizar recursos como Cycles, Modules e os diferentes layouts de visualização.
+
+Os testes de comparação entre Plane e Taiga e de onboarding serão realizados durante a reunião do projeto e adicionados posteriormente à documentação.
+"
+1002,Baweei,infra,"","",Fechada,Média,[Plane] Subir instância local (Community Edition) via Docker,Igor Kammer Grahl,John Nicolas,24 August 2026 08:40,"","",07 August 2026,21 August 2026,8.00,8.00,8.00,8.00,100,13 August 2026 14:13,24 August 2026 08:40,Igor Kammer Grahl,"",avaliacao_stack_taiga.docx,,,,No,"h3. Objetivo
+
+Colocar o Plane Community Edition rodando localmente e avaliar o peso
+operacional da stack.
+
+h3. Escopo
+
+* Subir o Plane CE via Docker Compose em máquina local
+* Registrar TODOS os erros encontrados e como foram resolvidos
+* Medir o tempo total do zero até a tela de login funcionando
+* Listar TODOS os serviços que a stack sobe e para que serve cada um
+  (Postgres, Redis/Valkey, MinIO, RabbitMQ, proxy reverso)
+* Anotar consumo de RAM, CPU e disco com a instância ociosa
+* ATENÇÃO: verificar qual versão da imagem do MinIO o compose oficial usa.
+  Se estiver como ""latest"" e não fixada, registrar isso como risco de
+  segurança no documento — o MinIO CE foi arquivado e não recebe mais patches.
+* Testar derrubar e subir novamente: os dados persistem?
+
+h3. Entregável
+
+Documento no wiki com passo a passo, diagrama simples dos serviços,
+consumo de recursos, e a seção de riscos.
+
+h3. Definição de pronto
+
+Outra pessoa do grupo consegue subir a instância seguindo apenas o documento.","Igor Kammer Grahl escreveu:
+> h3. Objetivo
+> 
+> Colocar o Plane Community Edition rodando localmente e avaliar o peso
+> operacional da stack.
+> 
+> h3. Escopo
+> 
+> * Subir o Plane CE via Docker Compose em máquina local
+> * Registrar TODOS os erros encontrados e como foram resolvidos
+> * Medir o tempo total do zero até a tela de login funcionando
+> * Listar TODOS os serviços que a stack sobe e para que serve cada um
+>   (Postgres, Redis/Valkey, MinIO, RabbitMQ, proxy reverso)
+> * Anotar consumo de RAM, CPU e disco com a instância ociosa
+> * ATENÇÃO: verificar qual versão da imagem do MinIO o compose oficial usa.
+>   Se estiver como ""latest"" e não fixada, registrar isso como risco de
+>   segurança no documento — o MinIO CE foi arquivado e não recebe mais patches.
+> * Testar derrubar e subir novamente: os dados persistem?
+> 
+> h3. Entregável
+> 
+> Documento no wiki com passo a passo, diagrama simples dos serviços,
+> consumo de recursos, e a seção de riscos.
+> 
+> h3. Definição de pronto
+> 
+> Outra pessoa do grupo consegue subir a instância seguindo apenas o documento.
+
+"
+1001,Baweei,infra,"","",Fechada,Média,[Taiga] Rodar sprint simulada e avaliar usabilidade,Igor Kammer Grahl,João  Lopes,24 August 2026 08:41,"","",07 August 2026,21 August 2026,8.00,8.00,0.00,0.00,100,13 August 2026 14:12,24 August 2026 08:41,Igor Kammer Grahl,"","",,,,No,"h3. Objetivo
+
+Usar o Taiga de verdade por alguns dias, com dados realistas, para avaliar
+se a ferramenta serve ao dia a dia da Fabtec.
+
+h3. Escopo
+
+* Criar 15 contas de usuário e confirmar que não há bloqueio de limite
+* Criar um projeto com backlog de ao menos 20 user stories
+* Rodar uma sprint simulada: planejamento, estimativa em story points,
+  movimentação no board, encerramento
+* Testar: burndown, velocity, epics, wiki interno, permissões por papel
+* Cronometrar as tarefas do dia a dia:
+  ** Tempo para criar uma tarefa nova
+  ** Tempo para mover card entre colunas
+  ** Cliques até ""o que eu preciso fazer hoje""
+* Simular onboarding: peça a alguém de fora do grupo para criar e concluir
+  uma tarefa sem instruções. Anote onde a pessoa travou.
+
+h3. Entregável
+
+Documento com prints das telas principais, tempos cronometrados,
+e o resultado do teste de onboarding.
+
+h3. Definição de pronto
+
+O documento responde: um calouro consegue usar isso sem treinamento?",""
+1000,Baweei,infra,"","",Fechada,Média,[Taiga] Subir instância local via Docker,Igor Kammer Grahl,João  Lopes,24 August 2026 08:41,"","",07 August 2026,21 August 2026,8.00,8.00,0.00,0.00,0,13 August 2026 14:11,24 August 2026 08:41,Igor Kammer Grahl,"","",,,,No,"h3. Objetivo
+
+Colocar o Taiga rodando localmente e documentar o processo de instalação
+de forma reproduzível por outra pessoa do grupo.
+
+h3. Escopo
+
+* Subir o Taiga via Docker Compose em máquina local
+* Registrar TODOS os erros encontrados e como foram resolvidos
+* Medir o tempo total do zero até a tela de login funcionando
+* Anotar consumo de RAM, CPU e disco com a instância ociosa
+* Verificar quais serviços sobem junto (banco, cache, fila, storage)
+* Testar o que acontece ao derrubar e subir novamente: os dados persistem?
+
+h3. Entregável
+
+Documento no wiki com passo a passo reproduzível, lista de problemas
+encontrados, e o consumo de recursos observado.
+
+h3. Definição de pronto
+
+Outra pessoa do grupo consegue subir a instância seguindo apenas o documento,
+sem pedir ajuda.",""
+999,Baweei,infra,"","",Fechada,Média,[Taiga] Subir instância local via Docker,Igor Kammer Grahl,Fernando Machado,24 August 2026 08:41,"","",07 August 2026,21 August 2026,8.00,8.00,0.00,0.00,0,13 August 2026 14:10,24 August 2026 08:41,Igor Kammer Grahl,"","",,,,No,"h3. Objetivo
+
+Colocar o Taiga rodando localmente e documentar o processo de instalação
+de forma reproduzível por outra pessoa do grupo.
+
+h3. Escopo
+
+* Subir o Taiga via Docker Compose em máquina local
+* Registrar TODOS os erros encontrados e como foram resolvidos
+* Medir o tempo total do zero até a tela de login funcionando
+* Anotar consumo de RAM, CPU e disco com a instância ociosa
+* Verificar quais serviços sobem junto (banco, cache, fila, storage)
+* Testar o que acontece ao derrubar e subir novamente: os dados persistem?
+
+h3. Entregável
+
+Documento no wiki com passo a passo reproduzível, lista de problemas
+encontrados, e o consumo de recursos observado.
+
+h3. Definição de pronto
+
+Outra pessoa do grupo consegue subir a instância seguindo apenas o documento,
+sem pedir ajuda.",""
