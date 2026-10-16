@@ -60,3 +60,25 @@ test_names = [
 for name in test_names:
     user_id = resolve_assignee(name, members)
     print(f"{name!r} -> {user_id}")
+
+
+custom_fields = api.get_issue_custom_attributes(project_id)
+
+print("\nCustom Fields do projeto:")
+
+for field in custom_fields:
+    print({
+        "id": field.get("id"),
+        "name": field.get("name"),
+        "type": field.get("type"),
+        "project": field.get("project"),
+        "order": field.get("order"),
+    })
+
+
+custom_field_id = api.ensure_issue_custom_attribute(
+    project_id=project_id,
+    name="Informações Adicionais",
+)
+
+print(f"\nID do campo de informações adicionais: {custom_field_id}")

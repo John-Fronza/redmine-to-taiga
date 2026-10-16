@@ -111,3 +111,58 @@ class TaigaAPI:
             "memberships",
             params={"project": project_id},
         )
+
+
+    def get_issue_custom_attributes(self, project_id):
+        """Consulta os campos personalizados das issues do projeto."""
+        return self.get(
+            "issue-custom-attributes",
+            params={"project": project_id},
+        )
+
+    def ensure_issue_custom_attribute(
+        self,
+        project_id,
+        name="Informações Adicionais",
+    ):
+        """Localiza ou cria um campo personalizado para as issues."""
+        fields = self.get_issue_custom_attributes(project_id)
+
+        for field in fields:
+            if field["name"].strip().casefold() == name.strip().casefold():
+                print(
+                    f"Custom Field '{name}' já existe "
+                    f"(ID {field['id']})."
+                )
+                return field["id"]
+
+        next_order = max(
+            (field.get("order", 0) for field in fields),
+            default=0,
+        ) + 1
+
+        response = requests.post(
+            f"{self.base_url}/api/v1/issue-custom-attributes",
+            headers={"Authorization": f"Bearer {self.token}"},
+            json={
+                "name": name,
+                "description": (
+                    "Preserva informações originais importadas do Redmine."
+                ),
+                "type": "text",
+                "order": next_order,
+                "project": project_id,
+            },
+            timeout=15,
+        )
+        response.raise_for_status()
+
+        created_field = response.json()
+
+        print(
+            f"Custom Field '{name}' criado "
+            f"(ID {created_field['id']})."
+        )
+
+        return created_field["id"]
+    

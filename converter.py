@@ -88,7 +88,7 @@ def convert_issue(issue, members):
         # para os IDs correspondentes do Taiga.
         "status": clean_text(issue["Status"]),
         "priority": clean_text(issue["Priority"]),
-        "assignee": clean_text(issue["Assignee"]),
+        "assignee": assignee_id,
         "tracker": clean_text(issue["Tracker"]),
 
         # Datas que pretendemos avaliar para migração.
@@ -146,19 +146,22 @@ def convert_issue(issue, members):
         "private": convert_bool(issue["Private"]),
     }
 
+    if redmine_assignee and assignee_id is None:
+        additional_data["redmine_assignee"] = redmine_assignee
+
     return {
         "taiga_data": taiga_data,
         "additional_data": additional_data,
     }
 
 
-def convert_csv(file_path):
+def convert_csv(file_path, members):
     issues = read_csv(file_path)
 
     converted_issues = []
 
     for issue in issues:
-        converted_issue = convert_issue(issue)
+        converted_issue = convert_issue(issue, members)
         converted_issues.append(converted_issue)
 
     return converted_issues
