@@ -34,16 +34,9 @@ def build_issue(
         "priority": priority_ids[priority_name],
         "type": type_ids[type_name],
         "assigned_to": taiga_data["assignee"],
-        "due_date": taiga_data["due_date"],
     }
 
     additional_text = build_additional_text(additional_data)
-
-    if taiga_data["last_notes"]:
-        additional_text += (
-            "\n\nÚltimas anotações:\n"
-            + taiga_data["last_notes"]
-        )
 
     return {
         "issue_data": issue_data,

@@ -89,12 +89,7 @@ def convert_issue(issue, taiga_members):
         "assignee": assignee_id,
         "tracker": clean_text(issue["Tracker"]),
 
-        # Datas que pretendemos avaliar para migração.
-        "start_date": convert_date(issue["Start date"]),
-        "due_date": convert_date(issue["Due date"]),
-
-        #Gostaria de manter mas não é claro se da pra converter
-        "last_notes": clean_text(issue["Last notes"]),
+        
     }
 
     additional_data = {
@@ -102,6 +97,13 @@ def convert_issue(issue, taiga_members):
         # Será importante para rastrear a migração.
         "redmine_id": convert_int(issue["#"]),
 
+        # Datas que pretendemos avaliar para migração.
+        "start_date": convert_date(issue["Start date"]),
+        "due_date": convert_date(issue["Due date"]),
+
+        #Gostaria de manter mas não é claro se da pra converter
+        "last_notes": clean_text(issue["Last notes"]),
+        
         # Mudanças
         "story_points": convert_float(issue["Storie Points"]),
         # Projeto de origem

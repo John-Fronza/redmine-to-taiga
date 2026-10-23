@@ -40,6 +40,53 @@ class TaigaAPI:
 
         return response.json()
 
+    
+    def create_issue(self, issue_data):
+        """Cria uma issue no Taiga e retorna os dados criados."""
+        if not self.token:
+            raise RuntimeError("Autentique-se antes de criar uma issue.")
+
+        url = f"{self.base_url}/api/v1/issues"
+
+        response = requests.post(
+            url,
+            headers={"Authorization": f"Bearer {self.token}"},
+            json=issue_data,
+            timeout=15,
+        )
+
+        response.raise_for_status()
+        return response.json()
+
+    def update_issue_custom_attributes(
+        self,
+        issue_id,
+        attributes_values,
+        version,
+    ):
+        """Atualiza os campos personalizados de uma issue."""
+        if not self.token:
+            raise RuntimeError("Autentique-se antes de atualizar uma issue.")
+
+        url = (
+            f"{self.base_url}/api/v1/"
+            f"issues/custom-attributes-values/{issue_id}"
+        )
+
+        response = requests.patch(
+            url,
+            headers={"Authorization": f"Bearer {self.token}"},
+            json={
+                "attributes_values": attributes_values,
+                "version": version,
+            },
+            timeout=15,
+        )
+
+        response.raise_for_status()
+        return response.json()
+
+
     def get_issue_types(self, project_id):
         return self.get(
             "issue-types",
