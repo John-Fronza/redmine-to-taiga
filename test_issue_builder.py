@@ -22,7 +22,7 @@ api.authenticate()
 project_id = 1
 
 # Consulta as configurações atuais do projeto.
-members = api.get_project_memberships(project_id)
+taiga_members = api.get_project_memberships(project_id)
 statuses = api.get_issue_statuses(project_id)
 priorities = api.get_priorities(project_id)
 
@@ -35,7 +35,7 @@ priority_ids = resolve_priority_ids(priorities)
 type_ids = resolve_type_ids(type_map)
 
 # Lê o CSV e converte os registros do Redmine.
-issues = convert_csv("input/redmine.csv", members)
+issues = convert_csv("input/redmine.csv", taiga_members)
 
 print(f"\nTotal de registros convertidos: {len(issues)}")
 

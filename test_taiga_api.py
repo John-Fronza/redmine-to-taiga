@@ -42,10 +42,10 @@ print("\nMapeamento de tipos:")
 for name, type_id in resolved_types.items():
     print(f"{name} -> {type_id}")
 
-members = api.get_project_memberships(project_id=project_id)
+taiga_members = api.get_project_memberships(project_id=project_id)
 
 print("\nMembros do projeto:")
-for member in members:
+for member in taiga_members:
     print(member)
 
 
@@ -58,7 +58,7 @@ test_names = [
 ]
 
 for name in test_names:
-    user_id = resolve_assignee(name, members)
+    user_id = resolve_assignee(name, taiga_members)
     print(f"{name!r} -> {user_id}")
 
 

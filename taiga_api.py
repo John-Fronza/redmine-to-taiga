@@ -1,6 +1,4 @@
-
 import requests
-
 
 class TaigaAPI:
     def __init__(self, base_url, username, password):

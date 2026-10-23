@@ -3,8 +3,6 @@ from datetime import datetime
 from csv_reader import read_csv
 from mappings import resolve_assignee
 
-
-
 def clean_text(value):
     if not value:
         return None
@@ -63,7 +61,7 @@ def convert_datetime(value):
     return date.strftime("%Y-%m-%d %H:%M:%S")
 
 
-def convert_issue(issue, members):
+def convert_issue(issue, taiga_members):
     """
     Converte uma issue do Redmine para o nosso modelo intermediário.
 
@@ -75,7 +73,7 @@ def convert_issue(issue, members):
     """
 
     redmine_assignee = clean_text(issue["Assignee"])
-    assignee_id = resolve_assignee(redmine_assignee, members)
+    assignee_id = resolve_assignee(redmine_assignee, taiga_members)
 
     taiga_data = {
 
@@ -155,13 +153,13 @@ def convert_issue(issue, members):
     }
 
 
-def convert_csv(file_path, members):
+def convert_csv(file_path, taiga_members):
     issues = read_csv(file_path)
 
     converted_issues = []
 
     for issue in issues:
-        converted_issue = convert_issue(issue, members)
+        converted_issue = convert_issue(issue, taiga_members)
         converted_issues.append(converted_issue)
 
     return converted_issues

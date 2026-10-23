@@ -6,6 +6,7 @@ STATUS_MAP = {
 }
 
 PRIORITY_MAP = {
+    "Baixa": "Low",
     "Média": "Normal",
     "Alta": "High",
 }
@@ -51,14 +52,14 @@ def resolve_type_ids(type_map):
     }
 
 
-def resolve_assignee(redmine_name, members):
+def resolve_assignee(redmine_name, taiga_members):
     """Retorna o ID do usuário correspondente ou None."""
     if not redmine_name or not redmine_name.strip():
         return None
 
     redmine_name = redmine_name.strip().casefold()
 
-    for member in members:
+    for member in taiga_members:
         taiga_name = member.get("full_name", "")
 
         if taiga_name.strip().casefold() == redmine_name:

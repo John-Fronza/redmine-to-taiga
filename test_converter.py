@@ -14,9 +14,9 @@ api = TaigaAPI(
 api.authenticate()
 
 project_id = 1
-members = api.get_project_memberships(project_id)
+taiga_members = api.get_project_memberships(project_id)
 
-issues = convert_csv("input/redmine.csv", members)
+issues = convert_csv("input/redmine.csv", taiga_members)
 
 print(f"\nTotal de registros: {len(issues)}")
 
